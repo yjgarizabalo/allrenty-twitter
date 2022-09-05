@@ -7,7 +7,22 @@ const Home = () => {
 
     const [info, setInfo] = useState([]);
     const [tw, setTw] = useState([]);
+
     const _goBack = () => console.log('Regresar');
+
+    const twitt = {
+        results: [
+            {
+                "id": 1,
+                "text": "hola mundo xD",
+            },
+            {
+                "id": 2,
+                "text": "hola mundo xD1"
+            }
+
+        ]
+    }
 
     useEffect(() => {
         const options = {
@@ -32,8 +47,8 @@ const Home = () => {
             try {
                 const response = await fetch('https://twitter154.p.rapidapi.com/user/tweets?username=JairG77&limit=100', options);
                 const tw = await response.json();
-                setTw(tw)
-                console.log(tw.results);
+                setTw(twitt.results)
+                console.log(twitt);
             } catch (error) {
                 console.log("error", error);
             }
@@ -58,16 +73,24 @@ const Home = () => {
             </View>
 
             <View style={styles.containerTw}>
-                <Card>
-                    <Card.Content>
-                        <Title>{info.username}</Title>
-                        <Paragraph>hola</Paragraph>
-                    </Card.Content>
-                    <Card.Actions>
-                        <Button>Cancel</Button>
-                        <Button>Ok</Button>
-                    </Card.Actions>
-                </Card>
+
+                {
+                    tw.map((t) => {
+                        return (
+                            <Card>
+                                <Card.Content>
+                                    <Title>{t.id}</Title>
+                                    <Paragraph>{t.text}</Paragraph>
+                                </Card.Content>
+                                <Card.Actions>
+                                    <Button>Cancel</Button>
+                                    <Button>Ok</Button>
+                                </Card.Actions>
+                            </Card>
+                        )
+                    })
+                }
+
             </View>
         </View>
     )
